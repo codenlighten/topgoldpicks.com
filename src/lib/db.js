@@ -18,6 +18,12 @@ export async function connectDb() {
   );
   await db.collection('picks').createIndex({ generated_at: -1 });
 
+  await db.collection('signups').createIndex(
+    { email: 1 },
+    { unique: true, name: 'email_unique' },
+  );
+  await db.collection('signups').createIndex({ createdAt: -1 });
+
   console.log('MongoDB connected');
   return db;
 }

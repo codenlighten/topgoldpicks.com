@@ -414,6 +414,122 @@
       border-radius: 24px;
     }
 
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.03)),
+        rgba(11, 10, 8, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+    .modal-close:hover { color: var(--gold-2); }
+
+    .modal h3 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+      letter-spacing: -0.04em;
+    }
+    .modal p.subtle { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; line-height: 1.55; }
+
+    .modal-plan-pill {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(247, 201, 72, 0.14);
+      border: 1px solid var(--border);
+      color: var(--gold-2);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .modal label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .modal input[type="email"] {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: 0.2s ease;
+    }
+    .modal input[type="email"]:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .modal-actions .btn { flex: 1; }
+
+    .modal-status {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      display: none;
+    }
+    .modal-status.show { display: block; }
+    .modal-status.ok { background: rgba(46, 229, 157, 0.1); border: 1px solid rgba(46, 229, 157, 0.3); color: var(--green); }
+    .modal-status.err { background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); color: var(--red); }
+
+    .modal-fine {
+      margin-top: 18px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     @media (max-width: 980px) {
       .board { grid-template-columns: 1fr 1fr; }
     }
@@ -1033,7 +1149,7 @@
             <li>Basic value-angle reasoning</li>
             <li>Email when today's board posts</li>
           </ul>
-          <a class="btn btn-secondary" href="#">Start Free</a>
+          <button type="button" class="btn btn-secondary signup-trigger" data-plan="free" data-source="plans">Start Free</button>
         </article>
 
         <article class="plan featured">
@@ -1048,7 +1164,7 @@
             <li>Email when the board updates</li>
             <li>7-day free trial</li>
           </ul>
-          <a class="btn btn-primary" href="#">Start Free Trial</a>
+          <button type="button" class="btn btn-primary signup-trigger" data-plan="gold" data-source="plans">Start Free Trial</button>
         </article>
 
         <article class="plan">
@@ -1062,7 +1178,7 @@
             <li>Expanded sport coverage</li>
             <li>Priority support</li>
           </ul>
-          <a class="btn btn-secondary" href="#">Go Pro</a>
+          <button type="button" class="btn btn-secondary signup-trigger" data-plan="pro" data-source="plans">Go Pro</button>
         </article>
       </div>
     </section>
@@ -1076,7 +1192,7 @@
             Anyone can pick winners on a hot streak. The bettors who last build a process &mdash; sized stakes, recorded results, walk-away rules. Top Gold Picks is one tool in that process, not a shortcut around it.
           </p>
         </div>
-        <a class="btn btn-primary" href="#plans">Start Free Trial</a>
+        <button type="button" class="btn btn-primary signup-trigger" data-plan="gold" data-source="cta">Start Free Trial</button>
       </div>
     </section>
   </main>
@@ -1104,6 +1220,26 @@
     </div>
     <div>© 2026 TopGoldPicks.com. All rights reserved.</div>
   </footer>
+
+  <div class="modal-backdrop" id="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-title" hidden>
+    <div class="modal">
+      <button type="button" class="modal-close" id="signup-close" aria-label="Close">&times;</button>
+      <div class="modal-plan-pill" id="signup-plan-pill">Free Preview</div>
+      <h3 id="signup-title">Get on the list.</h3>
+      <p class="subtle" id="signup-blurb">We'll email you the moment the daily board is open for sign-ups, plus what to expect from the platform.</p>
+      <form id="signup-form" novalidate>
+        <label for="signup-email">Email address</label>
+        <input type="email" id="signup-email" name="email" autocomplete="email" required placeholder="you@example.com" />
+        <input type="hidden" name="plan" id="signup-plan" value="free" />
+        <input type="hidden" name="source" id="signup-source" value="plans" />
+        <div class="modal-actions">
+          <button type="submit" class="btn btn-primary" id="signup-submit">Join the list</button>
+        </div>
+        <div class="modal-status" id="signup-status" role="status"></div>
+      </form>
+      <p class="modal-fine">By joining, you confirm you're 21+ where required. Top Gold Picks is informational only &mdash; not betting advice. Problem gambling? Call 1-800-GAMBLER.</p>
+    </div>
+  </div>
 
   <script>
     (() => {
@@ -1228,6 +1364,116 @@
       });
 
       loadPicks('baseball_mlb');
+    })();
+
+    (() => {
+      const modal = document.getElementById('signup-modal');
+      const closeBtn = document.getElementById('signup-close');
+      const form = document.getElementById('signup-form');
+      const emailInput = document.getElementById('signup-email');
+      const planInput = document.getElementById('signup-plan');
+      const sourceInput = document.getElementById('signup-source');
+      const pill = document.getElementById('signup-plan-pill');
+      const title = document.getElementById('signup-title');
+      const blurb = document.getElementById('signup-blurb');
+      const submit = document.getElementById('signup-submit');
+      const status = document.getElementById('signup-status');
+
+      const PLAN_COPY = {
+        free: {
+          pill: 'Free Preview',
+          title: 'Get on the list.',
+          blurb: "We'll email you the moment the daily board opens. Three free picks a week, no card required.",
+        },
+        gold: {
+          pill: 'Gold Daily — 7-day trial',
+          title: 'Claim your trial.',
+          blurb: "Drop your email and we'll save your spot for the 7-day Gold Daily trial. We'll email when it's live.",
+        },
+        pro: {
+          pill: 'Pro Edge',
+          title: 'Reserve Pro Edge.',
+          blurb: "Pro Edge is launching soon. Get on the list and we'll let you know first.",
+        },
+      };
+
+      function openModal(plan, source) {
+        const copy = PLAN_COPY[plan] || PLAN_COPY.free;
+        planInput.value = plan;
+        sourceInput.value = source || 'plans';
+        pill.textContent = copy.pill;
+        title.textContent = copy.title;
+        blurb.textContent = copy.blurb;
+        status.className = 'modal-status';
+        status.textContent = '';
+        submit.disabled = false;
+        submit.textContent = 'Join the list';
+        emailInput.value = '';
+        modal.hidden = false;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => emailInput.focus(), 50);
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.hidden = true;
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.signup-trigger');
+        if (!trigger) return;
+        e.preventDefault();
+        openModal(trigger.dataset.plan, trigger.dataset.source);
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          status.className = 'modal-status show err';
+          status.textContent = 'Please enter a valid email address.';
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = 'Joining…';
+        status.className = 'modal-status';
+
+        try {
+          const res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, plan: planInput.value, source: sourceInput.value }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            const detail = data.error === 'invalid_email'
+              ? "That email doesn't look valid."
+              : data.error === 'rate_limited'
+                ? "Too many attempts. Try again in a minute."
+                : "Something went wrong. Try again shortly.";
+            throw new Error(detail);
+          }
+          status.className = 'modal-status show ok';
+          status.textContent = data.returning
+            ? "You're already on the list. We'll be in touch."
+            : "You're in. Check your inbox for a welcome email.";
+          submit.textContent = "Done";
+        } catch (err) {
+          status.className = 'modal-status show err';
+          status.textContent = err.message;
+          submit.disabled = false;
+          submit.textContent = 'Try again';
+        }
+      });
     })();
   </script>
 </body>

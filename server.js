@@ -8,6 +8,7 @@ import { connectDb, closeDb } from './src/lib/db.js';
 import { startScheduler } from './src/jobs/scheduler.js';
 import oddsRoutes from './src/routes/odds.js';
 import picksRoutes from './src/routes/picks.js';
+import signupRoutes from './src/routes/signup.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -38,9 +39,18 @@ const expensiveLimiter = rateLimit({
   message: { error: 'rate_limited', detail: 'expensive endpoint — slow down' },
 });
 
+const signupLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'rate_limited', detail: 'too many signup attempts' },
+});
+
 app.use('/api/odds', apiLimiter, oddsRoutes);
 app.use('/api/picks/:sport/events/:eventId', expensiveLimiter);
 app.use('/api/picks', apiLimiter, picksRoutes);
+app.use('/api/signup', signupLimiter, signupRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
