@@ -73,6 +73,42 @@
       z-index: 1;
     }
 
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--size, 3px);
+      height: var(--size, 3px);
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff5bf 0%, var(--gold) 38%, transparent 72%);
+      box-shadow: 0 0 10px 2px rgba(247, 201, 72, 0.45);
+      opacity: 0;
+      transform: translate3d(0, 0, 0);
+      animation: sparkle-drift var(--duration, 10s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      will-change: transform, opacity;
+    }
+
+    @keyframes sparkle-drift {
+      0%   { opacity: 0;   transform: translate3d(0, 0, 0) scale(0.7); }
+      18%  { opacity: 0.9; transform: translate3d(4px, -18px, 0) scale(1); }
+      50%  { opacity: 1;   transform: translate3d(-3px, -55px, 0) scale(1.1); }
+      82%  { opacity: 0.55; transform: translate3d(6px, -85px, 0) scale(0.9); }
+      100% { opacity: 0;   transform: translate3d(-2px, -110px, 0) scale(0.6); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sparkle { animation: none; opacity: 0.35; }
+    }
+
     .shell {
       position: relative;
       z-index: 2;
@@ -920,6 +956,33 @@
 </head>
 <body>
   <div class="noise"></div>
+
+  <div class="sparkles" aria-hidden="true">
+    <span class="sparkle" style="--x: 6%;  --y: 14%; --size: 3px; --delay: 0s;    --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 18%; --y: 8%;  --size: 2px; --delay: 1.2s;  --duration: 11s;"></span>
+    <span class="sparkle" style="--x: 32%; --y: 22%; --size: 4px; --delay: 2.5s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 47%; --y: 6%;  --size: 2px; --delay: 0.7s;  --duration: 13s;"></span>
+    <span class="sparkle" style="--x: 61%; --y: 17%; --size: 3px; --delay: 3.8s;  --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 76%; --y: 11%; --size: 4px; --delay: 1.9s;  --duration: 12s;"></span>
+    <span class="sparkle" style="--x: 88%; --y: 24%; --size: 2px; --delay: 5.1s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 94%; --y: 7%;  --size: 3px; --delay: 4.0s;  --duration: 11s;"></span>
+    <span class="sparkle" style="--x: 11%; --y: 36%; --size: 2px; --delay: 6.3s;  --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 26%; --y: 41%; --size: 3px; --delay: 2.8s;  --duration: 12s;"></span>
+    <span class="sparkle" style="--x: 39%; --y: 33%; --size: 5px; --delay: 7.6s;  --duration: 11s;"></span>
+    <span class="sparkle" style="--x: 54%; --y: 44%; --size: 2px; --delay: 4.4s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 68%; --y: 38%; --size: 3px; --delay: 8.2s;  --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 81%; --y: 47%; --size: 2px; --delay: 5.7s;  --duration: 13s;"></span>
+    <span class="sparkle" style="--x: 92%; --y: 35%; --size: 4px; --delay: 9.0s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 8%;  --y: 56%; --size: 3px; --delay: 3.3s;  --duration: 11s;"></span>
+    <span class="sparkle" style="--x: 22%; --y: 64%; --size: 2px; --delay: 6.9s;  --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 44%; --y: 58%; --size: 4px; --delay: 10.1s; --duration: 12s;"></span>
+    <span class="sparkle" style="--x: 58%; --y: 68%; --size: 3px; --delay: 7.2s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 73%; --y: 61%; --size: 2px; --delay: 11.4s; --duration: 9s;"></span>
+    <span class="sparkle" style="--x: 86%; --y: 72%; --size: 3px; --delay: 4.6s;  --duration: 11s;"></span>
+    <span class="sparkle" style="--x: 15%; --y: 82%; --size: 2px; --delay: 8.8s;  --duration: 10s;"></span>
+    <span class="sparkle" style="--x: 50%; --y: 88%; --size: 4px; --delay: 5.4s;  --duration: 12s;"></span>
+    <span class="sparkle" style="--x: 78%; --y: 91%; --size: 2px; --delay: 9.7s;  --duration: 9s;"></span>
+  </div>
 
   <header class="shell nav">
     <a class="brand" href="#top" aria-label="Top Gold Picks home">
