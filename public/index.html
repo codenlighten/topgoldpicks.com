@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Top Gold Picks | AI-Powered Sports Pick Insights</title>
+  <meta name="description" content="Top Gold Picks is an AI-enhanced sports insights platform that analyzes odds, line movement, trends, matchups, and value signals to deliver smarter daily pick insights for legal-age users." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-2: #0b0a08;
+      --panel: rgba(255, 255, 255, 0.065);
+      --panel-strong: rgba(255, 255, 255, 0.105);
+      --text: #f8f5e9;
+      --muted: #b9b19c;
+      --gold: #f7c948;
+      --gold-2: #ffe78a;
+      --gold-3: #b7791f;
+      --green: #2ee59d;
+      --red: #ff6b6b;
+      --border: rgba(247, 201, 72, 0.22);
+      --shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(247, 201, 72, 0.22), transparent 28%),
+        radial-gradient(circle at 82% 8%, rgba(183, 121, 31, 0.16), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(247, 201, 72, 0.09), transparent 35%),
+        linear-gradient(135deg, #050505 0%, #0b0803 52%, #050505 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      z-index: 1;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 2;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      font-size: 1.12rem;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 15px;
+      background:
+        linear-gradient(145deg, var(--gold-2), var(--gold) 42%, var(--gold-3));
+      display: grid;
+      place-items: center;
+      color: #1a1202;
+      font-weight: 900;
+      box-shadow: 0 0 34px rgba(247, 201, 72, 0.36);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover { color: var(--gold-2); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: 0.25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: #1a1202;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold) 45%, #d99a23);
+      box-shadow: 0 16px 50px rgba(247, 201, 72, 0.26);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 65px rgba(247, 201, 72, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-color: rgba(247, 201, 72, 0.25);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(247, 201, 72, 0.09);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.06fr 0.94fr;
+      align-items: center;
+      gap: 48px;
+      min-height: 790px;
+      padding: 54px 0 84px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      color: var(--gold-2);
+      background: rgba(247, 201, 72, 0.08);
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3.1rem, 7vw, 6.8rem);
+      line-height: 0.91;
+      letter-spacing: -0.075em;
+      font-weight: 950;
+    }
+
+    .gold-text {
+      background: linear-gradient(135deg, #fff5bf 0%, var(--gold) 34%, #b7791f 78%, #fff0a5 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 60px rgba(247, 201, 72, 0.16);
+    }
+
+    .hero p {
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 680px;
+      margin: 28px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+      max-width: 640px;
+    }
+
+    .trust-card {
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.045);
+      border-radius: 18px;
+    }
+
+    .trust-card strong {
+      display: block;
+      color: var(--gold-2);
+      font-size: 1.1rem;
+      margin-bottom: 3px;
+    }
+
+    .trust-card span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .app-card-wrap {
+      position: relative;
+    }
+
+    .orb {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(247, 201, 72, 0.12);
+      filter: blur(18px);
+      right: -45px;
+      top: -55px;
+      z-index: -1;
+    }
+
+    .app-card {
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035)),
+        rgba(5, 5, 5, 0.72);
+      backdrop-filter: blur(20px);
+      border-radius: 34px;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .app-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+      display: inline-block;
+    }
+
+    .status.loading { color: var(--muted); }
+    .status.loading .status-dot { background: var(--gold); box-shadow: 0 0 14px var(--gold); }
+    .status.error { color: var(--red); }
+    .status.error .status-dot { background: var(--red); box-shadow: 0 0 14px var(--red); }
+
+    .bar span { transition: width 0.6s ease; }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .board-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .board-card .matchup {
+      font-weight: 900;
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    .board-card .pick-line {
+      color: var(--gold-2);
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+
+    .board-card .angle {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .board-card .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .risk {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .risk.low { background: rgba(46, 229, 157, 0.15); color: var(--green); }
+    .risk.moderate { background: rgba(247, 201, 72, 0.15); color: var(--gold-2); }
+    .risk.high { background: rgba(255, 107, 107, 0.15); color: var(--red); }
+
+    .sport-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .sport-tab {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .sport-tab:hover { color: var(--gold-2); border-color: var(--border); }
+    .sport-tab.active {
+      background: linear-gradient(135deg, var(--gold-2), var(--gold) 45%, #d99a23);
+      color: #1a1202;
+      border-color: transparent;
+    }
+
+    .board-empty {
+      grid-column: 1 / -1;
+      padding: 40px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+    }
+
+    @media (max-width: 980px) {
+      .board { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .board { grid-template-columns: 1fr; }
+    }
+
+    .phone-dots { display: flex; gap: 6px; }
+    .phone-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .pick-panel { padding: 24px; }
+
+    .game-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      margin-bottom: 16px;
+    }
+
+    .league {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .teams {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 900;
+      font-size: 1.12rem;
+    }
+
+    .vs {
+      color: var(--gold);
+      font-size: 0.78rem;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(247, 201, 72, 0.1);
+    }
+
+    .confidence {
+      margin-top: 18px;
+    }
+
+    .confidence-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      width: 84%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-3), var(--gold), var(--gold-2));
+      border-radius: inherit;
+    }
+
+    .pick-result {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(247, 201, 72, 0.14), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(247, 201, 72, 0.24);
+    }
+
+    .pick-result small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .pick-result strong { color: var(--gold-2); }
+
+    .odd-pill {
+      color: #1a1202;
+      background: var(--gold);
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+
+    .mini-card strong { font-size: 1.15rem; }
+
+    section { padding: 92px 0; }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2.25rem, 4.4vw, 4.1rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      font-weight: 950;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.05rem;
+      margin: 18px 0 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 26px;
+      min-height: 245px;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: #1a1202;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold-3));
+      font-weight: 950;
+      font-size: 1.25rem;
+      margin-bottom: 22px;
+    }
+
+    .feature h3 {
+      margin: 0 0 12px;
+      font-size: 1.22rem;
+      letter-spacing: -0.03em;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.62;
+      font-size: 0.95rem;
+    }
+
+    .how-it-works {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .num {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(247, 201, 72, 0.12);
+      color: var(--gold-2);
+      border: 1px solid var(--border);
+      font-weight: 900;
+    }
+
+    .step h3 { margin: 0 0 7px; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.58; }
+
+    .signal-board {
+      padding: 28px;
+      border-radius: 32px;
+      background:
+        linear-gradient(145deg, rgba(247, 201, 72, 0.08), rgba(255, 255, 255, 0.035)),
+        rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 17px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .signal-row:last-child { border-bottom: none; }
+    .signal-row span { color: var(--muted); }
+    .signal-row strong { color: var(--gold-2); }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .plan {
+      position: relative;
+      padding: 28px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      overflow: hidden;
+    }
+
+    .plan.featured {
+      background:
+        linear-gradient(180deg, rgba(247, 201, 72, 0.13), rgba(255, 255, 255, 0.045)),
+        rgba(255, 255, 255, 0.055);
+      border-color: rgba(247, 201, 72, 0.4);
+      box-shadow: 0 30px 80px rgba(247, 201, 72, 0.12);
+    }
+
+    .popular {
+      position: absolute;
+      right: 22px;
+      top: 22px;
+      font-size: 0.72rem;
+      color: #1a1202;
+      font-weight: 900;
+      background: var(--gold);
+      padding: 7px 10px;
+      border-radius: 999px;
+    }
+
+    .plan h3 { margin: 0 0 8px; font-size: 1.3rem; }
+    .plan .price {
+      margin: 16px 0 18px;
+      font-size: 2.5rem;
+      letter-spacing: -0.06em;
+      font-weight: 950;
+    }
+    .plan .price span { color: var(--muted); font-size: 0.95rem; letter-spacing: 0; }
+    .plan p { color: var(--muted); line-height: 1.6; }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 28px;
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .checklist li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 900;
+      margin-right: 9px;
+    }
+
+    .cta-band {
+      padding: 54px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.2), transparent 24%),
+        linear-gradient(135deg, rgba(247, 201, 72, 0.24), rgba(183, 121, 31, 0.16), rgba(255, 255, 255, 0.045));
+      border: 1px solid rgba(247, 201, 72, 0.35);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h2 { font-size: clamp(2.05rem, 4vw, 3.5rem); }
+    .cta-band p { color: var(--muted); line-height: 1.7; max-width: 720px; }
+
+    .legal {
+      background: rgba(255, 255, 255, 0.035);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 40px 0;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .footer-links a:hover { color: var(--gold-2); }
+
+    @media (max-width: 980px) {
+      .hero,
+      .how-it-works,
+      .cta-band { grid-template-columns: 1fr; }
+      .features,
+      .plans { grid-template-columns: 1fr 1fr; }
+      .hero { min-height: auto; padding-top: 36px; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .features,
+      .plans,
+      .trust-row,
+      .mini-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 3.7rem; }
+      .hero-actions .btn { width: 100%; }
+      .teams { align-items: flex-start; flex-direction: column; }
+      .pick-result { grid-template-columns: 1fr; }
+      .cta-band { padding: 32px; }
+      .nav { padding: 18px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="shell nav">
+    <a class="brand" href="#top" aria-label="Top Gold Picks home">
+      <span class="logo-mark">TG</span>
+      <span>Top Gold Picks</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#plans">Plans</a>
+      <a href="#responsible">Responsible Play</a>
+    </nav>
+    <a class="btn btn-primary" href="#plans">Get Daily Picks</a>
+  </header>
+
+  <main id="top">
+    <section class="shell hero">
+      <div>
+        <div class="badge"><span class="dot"></span> AI-enhanced sports pick intelligence</div>
+        <h1>Find the <span class="gold-text">golden angle</span> before the line moves.</h1>
+        <p>
+          TopGoldPicks.com analyzes live odds, sportsbook movement, matchup trends, market signals, and value indicators to deliver daily AI-powered sports pick insights for users of legal age.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#plans">Start With Today’s Picks →</a>
+          <a class="btn btn-secondary" href="#how">See How It Works</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-card">
+            <strong>Live Odds</strong>
+            <span>Tracks lines and market movement from odds data sources.</span>
+          </div>
+          <div class="trust-card">
+            <strong>AI Signals</strong>
+            <span>Ranks games by trends, matchup logic, and value indicators.</span>
+          </div>
+          <div class="trust-card">
+            <strong>Daily Picks</strong>
+            <span>Clear insights delivered for smarter pre-game review.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card-wrap" aria-label="Top Gold Picks live preview">
+        <div class="orb"></div>
+        <div class="app-card" id="hero-card">
+          <div class="app-top">
+            <div class="status"><span class="status-dot"></span> <span id="hero-status">Loading Daily Board…</span></div>
+            <div class="phone-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="pick-panel">
+            <div class="game-card">
+              <div class="league" id="hero-league">AI Pick Board · Example Preview</div>
+              <div class="teams">
+                <span id="hero-away">—</span>
+                <span class="vs">VS</span>
+                <span id="hero-home">—</span>
+              </div>
+              <div class="confidence">
+                <div class="confidence-head">
+                  <span>Gold Signal Confidence</span>
+                  <strong id="hero-confidence">—</strong>
+                </div>
+                <div class="bar"><span id="hero-bar" style="width: 0%"></span></div>
+              </div>
+              <div class="pick-result">
+                <div>
+                  <small>AI Value Angle</small>
+                  <strong id="hero-angle">Loading insight…</strong>
+                </div>
+                <span class="odd-pill" id="hero-market">—</span>
+              </div>
+            </div>
+
+            <div class="mini-grid" id="hero-signals">
+              <div class="mini-card"><span>Market</span><strong>—</strong></div>
+              <div class="mini-card"><span>Pick</span><strong>—</strong></div>
+              <div class="mini-card"><span>Confidence</span><strong>—</strong></div>
+              <div class="mini-card"><span>Risk Flag</span><strong>—</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" id="board">
+      <div class="section-head">
+        <div class="eyebrow">Today's Gold Board</div>
+        <h2>Live AI pick insights from current odds.</h2>
+        <p>
+          Pulled from real sportsbook lines and analyzed by the Top Gold engine. Insights only — not betting advice. For users of legal age in their jurisdiction.
+        </p>
+      </div>
+
+      <div class="sport-tabs" id="sport-tabs" role="tablist" aria-label="Choose sport">
+        <button class="sport-tab active" data-sport="baseball_mlb" role="tab">MLB</button>
+        <button class="sport-tab" data-sport="basketball_nba" role="tab">NBA</button>
+        <button class="sport-tab" data-sport="icehockey_nhl" role="tab">NHL</button>
+        <button class="sport-tab" data-sport="americanfootball_nfl" role="tab">NFL</button>
+        <button class="sport-tab" data-sport="soccer_epl" role="tab">EPL</button>
+      </div>
+
+      <div class="board" id="board-grid" aria-live="polite">
+        <div class="board-empty">Loading today's pick insights…</div>
+      </div>
+    </section>
+
+    <section class="shell" id="features">
+      <div class="section-head">
+        <div class="eyebrow">Why Top Gold Picks</div>
+        <h2>Built for bettors who want insight, not noise.</h2>
+        <p>
+          Sportsbooks move fast. Top Gold Picks helps users review data-backed angles before making their own decisions, combining odds intelligence with AI-enhanced analysis in one simple dashboard.
+        </p>
+      </div>
+
+      <div class="features">
+        <article class="feature">
+          <div class="icon">₿</div>
+          <h3>Odds API Intelligence</h3>
+          <p>Pulls live odds and line movement signals across major sportsbooks so users can understand where the market is shifting.</p>
+        </article>
+        <article class="feature">
+          <div class="icon">AI</div>
+          <h3>AI Pick Scoring</h3>
+          <p>Scores potential picks using matchup data, trend strength, implied value, volatility, and risk indicators.</p>
+        </article>
+        <article class="feature">
+          <div class="icon">⚡</div>
+          <h3>Daily Gold Board</h3>
+          <p>Delivers a focused daily board of pick insights instead of overwhelming users with every game on the slate.</p>
+        </article>
+        <article class="feature">
+          <div class="icon">↗</div>
+          <h3>Line Movement Alerts</h3>
+          <p>Highlights movement patterns that may reveal market pressure, steam moves, fading opportunities, or changing value.</p>
+        </article>
+        <article class="feature">
+          <div class="icon">🏆</div>
+          <h3>Confidence Tiers</h3>
+          <p>Groups picks into clear confidence bands so users can quickly separate strong signals from speculative angles.</p>
+        </article>
+        <article class="feature">
+          <div class="icon">🛡</div>
+          <h3>Legal-Age Access</h3>
+          <p>Designed for users who meet the legal age requirements in their jurisdiction, with responsible-gaming messaging built in.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" id="how">
+      <div class="how-it-works">
+        <div class="section-head">
+          <div class="eyebrow">The Engine</div>
+          <h2>From raw odds to readable pick intelligence.</h2>
+          <p>
+            Top Gold Picks turns sportsbook data into a daily decision-support board that helps users understand the “why” behind each highlighted angle.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <div>
+              <h3>Ingest the market</h3>
+              <p>Odds, spreads, totals, moneylines, price movement, and bookmaker variation are collected and normalized.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <div>
+              <h3>Analyze the matchup</h3>
+              <p>The AI reviews recent performance, team trends, injuries when available, historical context, and situational factors.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <div>
+              <h3>Score the opportunity</h3>
+              <p>Potential picks are ranked by value, confidence, timing, volatility, and risk so users can review the strongest signals first.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="num">4</div>
+            <div>
+              <h3>Deliver the gold</h3>
+              <p>Users receive daily pick insights with clean explanations, confidence tiers, and alerts when market conditions shift.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="section-head">
+        <div class="eyebrow">Signal Stack</div>
+        <h2>Every pick should come with a reason.</h2>
+        <p>
+          The platform is designed to show the ingredients behind the insight, helping users evaluate whether a pick makes sense before they act.
+        </p>
+      </div>
+      <div class="signal-board">
+        <div class="signal-row"><span>Line Movement</span><strong>Tracks opening line vs current market</strong></div>
+        <div class="signal-row"><span>Book Discrepancy</span><strong>Finds price differences across sportsbooks</strong></div>
+        <div class="signal-row"><span>Trend Strength</span><strong>Reviews recent form, matchup history, and momentum</strong></div>
+        <div class="signal-row"><span>Value Detection</span><strong>Flags picks where odds appear misaligned with the model</strong></div>
+        <div class="signal-row"><span>Risk Context</span><strong>Surfaces volatility, uncertainty, and caution factors</strong></div>
+      </div>
+    </section>
+
+    <section class="shell" id="plans">
+      <div class="section-head">
+        <div class="eyebrow">Membership</div>
+        <h2>Choose your access level.</h2>
+        <p>
+          Launch with simple tiers and upgrade the platform as the prediction engine, sports coverage, and alert system expands.
+        </p>
+      </div>
+
+      <div class="plans">
+        <article class="plan">
+          <h3>Free Preview</h3>
+          <div class="price">$0 <span>/ start</span></div>
+          <p>For new users who want to see the daily board format before upgrading.</p>
+          <ul class="checklist">
+            <li>Limited weekly pick preview</li>
+            <li>Basic explanation</li>
+            <li>Responsible-play reminders</li>
+          </ul>
+          <a class="btn btn-secondary" href="#">Join Free</a>
+        </article>
+
+        <article class="plan featured">
+          <div class="popular">Most Popular</div>
+          <h3>Gold Daily</h3>
+          <div class="price">$29 <span>/ month</span></div>
+          <p>For users who want daily AI pick insights and market signal summaries.</p>
+          <ul class="checklist">
+            <li>Daily Gold Board picks</li>
+            <li>Confidence scoring</li>
+            <li>Line movement notes</li>
+            <li>AI value angle explanations</li>
+          </ul>
+          <a class="btn btn-primary" href="#">Unlock Gold Picks</a>
+        </article>
+
+        <article class="plan">
+          <h3>Pro Edge</h3>
+          <div class="price">$79 <span>/ month</span></div>
+          <p>For power users who want deeper market intelligence and faster alerts.</p>
+          <ul class="checklist">
+            <li>Everything in Gold Daily</li>
+            <li>Premium confidence tiers</li>
+            <li>Line movement alerts</li>
+            <li>Expanded sport coverage</li>
+          </ul>
+          <a class="btn btn-secondary" href="#">Go Pro</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell" id="responsible">
+      <div class="cta-band">
+        <div>
+          <div class="eyebrow">Play Smart</div>
+          <h2>Better data. Better discipline.</h2>
+          <p>
+            Top Gold Picks is an informational platform. It does not guarantee outcomes, does not place wagers, and should not be treated as financial advice. Users are responsible for obeying all laws in their jurisdiction and only participating where legal.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="#plans">View Plans</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="legal">
+    <div class="shell">
+      <strong>Responsible Gaming Notice:</strong> Top Gold Picks provides sports analysis and informational insights only. No pick, prediction, model output, or confidence score guarantees a winning result. Sports betting involves risk and may not be legal in all jurisdictions. Users must be of legal age and comply with local laws. Never wager more than you can afford to lose. If gambling becomes a problem, seek help from qualified responsible-gaming resources.
+    </div>
+  </div>
+
+  <footer class="shell">
+    <div class="brand">
+      <span class="logo-mark">TG</span>
+      <span>Top Gold Picks</span>
+    </div>
+    <div class="footer-links">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#responsible">Responsible Gaming</a>
+      <a href="mailto:info@topgoldpicks.com">Contact</a>
+    </div>
+    <div>© 2026 TopGoldPicks.com. All rights reserved.</div>
+  </footer>
+
+  <script>
+    (() => {
+      const els = {
+        heroStatus: document.getElementById('hero-status'),
+        heroLeague: document.getElementById('hero-league'),
+        heroAway: document.getElementById('hero-away'),
+        heroHome: document.getElementById('hero-home'),
+        heroConfidence: document.getElementById('hero-confidence'),
+        heroBar: document.getElementById('hero-bar'),
+        heroAngle: document.getElementById('hero-angle'),
+        heroMarket: document.getElementById('hero-market'),
+        heroSignals: document.getElementById('hero-signals'),
+        heroCardStatus: document.querySelector('#hero-card .status'),
+        boardGrid: document.getElementById('board-grid'),
+        tabs: document.getElementById('sport-tabs'),
+      };
+
+      const SPORT_TITLES = {
+        baseball_mlb: 'MLB',
+        basketball_nba: 'NBA',
+        icehockey_nhl: 'NHL',
+        americanfootball_nfl: 'NFL',
+        soccer_epl: 'Premier League',
+      };
+
+      function escapeHtml(str) {
+        return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+        }[c]));
+      }
+
+      function setHeroStatus(text, cls) {
+        els.heroStatus.textContent = text;
+        els.heroCardStatus.classList.remove('loading', 'error');
+        if (cls) els.heroCardStatus.classList.add(cls);
+      }
+
+      function renderHero(pick, sportTitle) {
+        if (!pick || !pick.insight) return;
+        const i = pick.insight;
+        setHeroStatus('Daily Board Live');
+        els.heroLeague.textContent = `${sportTitle} · AI Pick Board`;
+        els.heroAway.textContent = pick.away_team || '—';
+        els.heroHome.textContent = pick.home_team || '—';
+        const conf = Math.max(0, Math.min(100, Number(i.confidence) || 0));
+        els.heroConfidence.textContent = `${conf}%`;
+        els.heroBar.style.width = `${conf}%`;
+        els.heroAngle.textContent = i.value_angle || i.pick || '—';
+        els.heroMarket.textContent = (i.market || '').toUpperCase() || 'PICK';
+
+        const signals = Array.isArray(i.key_signals) ? i.key_signals.slice(0, 2) : [];
+        const cards = [
+          { label: 'Pick', value: i.pick || '—' },
+          { label: 'Confidence', value: `${conf}%` },
+          { label: 'Risk Flag', value: (i.risk_flag || 'n/a').toUpperCase() },
+          { label: 'Signal', value: signals[0] || (i.market || 'value angle') },
+        ];
+        els.heroSignals.innerHTML = cards.map((c) =>
+          `<div class="mini-card"><span>${escapeHtml(c.label)}</span><strong>${escapeHtml(c.value)}</strong></div>`
+        ).join('');
+      }
+
+      function renderBoard(picks, sportTitle) {
+        const usable = picks.filter((p) => p.insight && !p.error);
+        if (!usable.length) {
+          els.boardGrid.innerHTML = `<div class="board-empty">No live ${escapeHtml(sportTitle)} slate available right now. Check back closer to game time.</div>`;
+          return;
+        }
+        els.boardGrid.innerHTML = usable.map((p) => {
+          const i = p.insight;
+          const conf = Math.max(0, Math.min(100, Number(i.confidence) || 0));
+          const risk = (i.risk_flag || 'moderate').toLowerCase();
+          const when = p.commence_time
+            ? new Date(p.commence_time).toLocaleString(undefined, {
+                weekday: 'short', hour: 'numeric', minute: '2-digit',
+              })
+            : '';
+          return `
+            <article class="board-card">
+              <div class="matchup">${escapeHtml(p.away_team)} <span class="vs">@</span> ${escapeHtml(p.home_team)}</div>
+              <div class="pick-line">${escapeHtml(i.pick || '')} <small style="color:var(--muted);font-weight:600">· ${escapeHtml((i.market || '').toUpperCase())}</small></div>
+              <div class="angle">${escapeHtml(i.value_angle || '')}</div>
+              <div class="meta">
+                <span>${escapeHtml(when)}</span>
+                <span>${conf}% · <span class="risk ${escapeHtml(risk)}">${escapeHtml(risk)}</span></span>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      async function loadPicks(sportKey) {
+        const title = SPORT_TITLES[sportKey] || sportKey;
+        setHeroStatus(`Loading ${title}…`, 'loading');
+        els.boardGrid.innerHTML = `<div class="board-empty">Loading ${escapeHtml(title)} pick insights…</div>`;
+
+        try {
+          const res = await fetch(`/api/picks/${encodeURIComponent(sportKey)}?limit=4`);
+          if (!res.ok) throw new Error(`API ${res.status}`);
+          const data = await res.json();
+          const picks = Array.isArray(data.picks) ? data.picks : [];
+          if (!picks.length) {
+            setHeroStatus(`No ${title} slate`, 'error');
+            els.boardGrid.innerHTML = `<div class="board-empty">No live ${escapeHtml(title)} games on the slate right now. Try another sport.</div>`;
+            return;
+          }
+          renderHero(picks[0], title);
+          renderBoard(picks, title);
+        } catch (err) {
+          console.warn('picks load failed', err);
+          setHeroStatus('Preview unavailable', 'error');
+          els.boardGrid.innerHTML = `<div class="board-empty">Unable to load live insights right now. Please try again shortly.</div>`;
+        }
+      }
+
+      els.tabs.addEventListener('click', (e) => {
+        const btn = e.target.closest('.sport-tab');
+        if (!btn) return;
+        els.tabs.querySelectorAll('.sport-tab').forEach((b) => b.classList.toggle('active', b === btn));
+        loadPicks(btn.dataset.sport);
+      });
+
+      loadPicks('baseball_mlb');
+    })();
+  </script>
+</body>
+</html>
