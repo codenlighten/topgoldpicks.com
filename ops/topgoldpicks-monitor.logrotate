@@ -1,0 +1,9 @@
+/var/log/topgoldpicks-monitor.log /var/log/topgoldpicks-backup.log {
+  weekly
+  rotate 4
+  compress
+  delaycompress
+  missingok
+  notifempty
+  copytruncate
+}

@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Uptime monitor — checks /api/health every 5 minutes, emails on state change.
+# Install with: cp ops/topgoldpicks-monitor.cron /etc/cron.d/topgoldpicks-monitor
+*/5 * * * * root /opt/topgoldpicks/scripts/monitor.sh >> /var/log/topgoldpicks-monitor.log 2>&1
