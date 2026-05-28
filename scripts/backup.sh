@@ -5,7 +5,7 @@ BACKUP_DIR="${BACKUP_DIR:-/var/backups/mongodb}"
 RETENTION_DAYS="${RETENTION_DAYS:-14}"
 MONGO_HOST="${MONGO_HOST:-127.0.0.1}"
 MONGO_PORT="${MONGO_PORT:-27017}"
-DB_NAME="${DB_NAME:-topgoldpicks}"
+DB_NAME="${DB_NAME:-touchgoldpicks}"
 
 ts() { date -u +'%Y-%m-%dT%H:%M:%SZ'; }
 log() { echo "[$(ts)] $*"; }

@@ -63,7 +63,7 @@ async function start() {
   await connectDb();
   startScheduler();
   app.listen(config.port, () => {
-    console.log(`Top Gold Picks server listening on http://localhost:${config.port}`);
+    console.log(`Touch Gold Picks server listening on http://localhost:${config.port}`);
   });
 }
 

@@ -1,4 +1,4 @@
-# topgoldpicks.com
+# touchgoldpicks.com
 
 AI-enhanced sports pick insights platform. Pulls live odds, runs them through GPT-4o-mini, and serves daily pick insights with confidence + value-angle analysis.
 

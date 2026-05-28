@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Daily MongoDB backup at 02:00 UTC, 14-day retention.
+# Install with: cp ops/touchgoldpicks-backup.cron /etc/cron.d/touchgoldpicks-backup
+0 2 * * * root /opt/touchgoldpicks/scripts/backup.sh >> /var/log/touchgoldpicks-backup.log 2>&1

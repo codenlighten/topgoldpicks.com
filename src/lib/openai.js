@@ -3,7 +3,7 @@ import { config } from '../config.js';
 
 export const openai = new OpenAI({ apiKey: config.openai.key });
 
-const SYSTEM_PROMPT = `You are the analyst engine for Top Gold Picks, an AI sports insights platform for legal-age users.
+const SYSTEM_PROMPT = `You are the analyst engine for Touch Gold Picks, an AI sports insights platform for legal-age users.
 
 You analyze sportsbook odds data and produce structured pick insights. You DO NOT guarantee outcomes. You DO NOT tell users to bet. You provide informational angles only.
 

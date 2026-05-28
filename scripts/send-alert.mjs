@@ -7,9 +7,9 @@ import nodemailer from 'nodemailer';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const subject = process.argv[2] || 'Top Gold Picks Alert';
+const subject = process.argv[2] || 'Touch Gold Picks Alert';
 const to = process.env.MONITOR_ALERT_TO || process.env.SMTP_USER;
-const fromName = process.env.MAIL_FROM_NAME || 'Top Gold Picks Monitor';
+const fromName = process.env.MAIL_FROM_NAME || 'Touch Gold Picks Monitor';
 const fromAddress = process.env.MAIL_FROM_ADDRESS || process.env.SMTP_USER;
 
 let body = '';

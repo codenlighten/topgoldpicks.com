@@ -1,4 +1,4 @@
-/var/log/topgoldpicks-monitor.log /var/log/topgoldpicks-backup.log {
+/var/log/touchgoldpicks-monitor.log /var/log/touchgoldpicks-backup.log {
   weekly
   rotate 4
   compress

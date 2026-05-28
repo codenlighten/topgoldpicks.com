@@ -6,7 +6,7 @@ const secure = (process.env.SMTP_SECURE || 'true') === 'true';
 const user = process.env.SMTP_USER;
 const pass = process.env.SMTP_PASSWORD;
 
-const fromName = process.env.MAIL_FROM_NAME || 'Top Gold Picks';
+const fromName = process.env.MAIL_FROM_NAME || 'Touch Gold Picks';
 const fromAddress = process.env.MAIL_FROM_ADDRESS || user;
 const replyTo = process.env.MAIL_REPLY_TO || fromAddress;
 
@@ -35,14 +35,14 @@ export async function sendWelcomeEmail({ to, plan }) {
     free: 'Free Preview',
     gold: 'Gold Daily (7-day free trial)',
     pro: 'Pro Edge',
-  })[plan] || 'Top Gold Picks';
+  })[plan] || 'Touch Gold Picks';
 
-  const subject = 'Welcome to Top Gold Picks';
-  const text = `Welcome to Top Gold Picks.
+  const subject = 'Welcome to Touch Gold Picks';
+  const text = `Welcome to Touch Gold Picks.
 
 You're on the list for ${planLabel}. We'll let you know the moment the daily board is open for sign-ups, and what to expect from the platform.
 
-What Top Gold Picks is:
+What Touch Gold Picks is:
 - AI sports angles built from live US sportsbook odds
 - A focused daily board, not a full slate
 - Reasoning, confidence, and risk on every pick
@@ -50,15 +50,15 @@ What Top Gold Picks is:
 
 Must be 21+ where required. Problem gambling? Call 1-800-GAMBLER.
 
-— The Top Gold Picks Team
-https://topgoldpicks.com`;
+— The Touch Gold Picks Team
+https://touchgoldpicks.com`;
 
   const html = `<!doctype html>
 <html><body style="font-family: -apple-system, Segoe UI, Inter, sans-serif; background: #0b0a08; color: #f8f5e9; padding: 32px;">
   <div style="max-width: 560px; margin: 0 auto; background: rgba(255,255,255,0.04); border: 1px solid rgba(247,201,72,0.22); border-radius: 18px; padding: 28px;">
-    <h1 style="color: #f7c948; margin: 0 0 16px; font-size: 22px;">Welcome to Top Gold Picks</h1>
+    <h1 style="color: #f7c948; margin: 0 0 16px; font-size: 22px;">Welcome to Touch Gold Picks</h1>
     <p style="line-height: 1.6; color: #d9d3c1;">You're on the list for <strong style="color: #ffe78a;">${planLabel}</strong>. We'll email you the moment the daily board is open for sign-ups, and what to expect from the platform.</p>
-    <h3 style="color: #ffe78a; margin: 24px 0 8px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;">What Top Gold Picks is</h3>
+    <h3 style="color: #ffe78a; margin: 24px 0 8px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;">What Touch Gold Picks is</h3>
     <ul style="line-height: 1.7; color: #d9d3c1; padding-left: 18px;">
       <li>AI sports angles built from live US sportsbook odds</li>
       <li>A focused daily board, not a full slate</li>
@@ -66,10 +66,10 @@ https://topgoldpicks.com`;
       <li>Informational insights only &mdash; not betting advice</li>
     </ul>
     <p style="margin-top: 24px; font-size: 12px; color: #8b836f; line-height: 1.5;">
-      Must be 21+ where required. Problem gambling? Call <a href="tel:1-800-426-2537" style="color: #ffe78a;">1-800-GAMBLER</a>. Top Gold Picks is not affiliated with, endorsed by, or sponsored by any sportsbook.
+      Must be 21+ where required. Problem gambling? Call <a href="tel:1-800-426-2537" style="color: #ffe78a;">1-800-GAMBLER</a>. Touch Gold Picks is not affiliated with, endorsed by, or sponsored by any sportsbook.
     </p>
   </div>
-  <p style="text-align: center; font-size: 11px; color: #6b6452; margin-top: 16px;">&copy; 2026 Top Gold Picks &middot; <a href="https://topgoldpicks.com" style="color: #b9b19c;">topgoldpicks.com</a></p>
+  <p style="text-align: center; font-size: 11px; color: #6b6452; margin-top: 16px;">&copy; 2026 Touch Gold Picks &middot; <a href="https://touchgoldpicks.com" style="color: #b9b19c;">touchgoldpicks.com</a></p>
 </body></html>`;
 
   return tx.sendMail({

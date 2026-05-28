@@ -1,11 +1,11 @@
 #!/bin/bash
 set -uo pipefail
 
-URL="${MONITOR_URL:-https://topgoldpicks.com/api/health}"
-STATE_DIR="${MONITOR_STATE_DIR:-/var/lib/topgoldpicks-monitor}"
+URL="${MONITOR_URL:-https://touchgoldpicks.com/api/health}"
+STATE_DIR="${MONITOR_STATE_DIR:-/var/lib/touchgoldpicks-monitor}"
 STATE_FILE="$STATE_DIR/state"
 SINCE_FILE="$STATE_DIR/down_since"
-SEND_ALERT="${SEND_ALERT_SCRIPT:-/opt/topgoldpicks/scripts/send-alert.mjs}"
+SEND_ALERT="${SEND_ALERT_SCRIPT:-/opt/touchgoldpicks/scripts/send-alert.mjs}"
 TIMEOUT="${MONITOR_TIMEOUT:-10}"
 
 mkdir -p "$STATE_DIR"
@@ -37,7 +37,7 @@ send_alert() {
 
 if [ "$CURRENT" = "down" ] && [ "$PREV_STATE" = "up" ]; then
   date -u +'%Y-%m-%dT%H:%M:%SZ' > "$SINCE_FILE"
-  SUBJECT="[Top Gold Picks] Site DOWN"
+  SUBJECT="[Touch Gold Picks] Site DOWN"
   MSG="Health check failed at $NOW
 
 URL: $URL
@@ -47,10 +47,10 @@ Body (first 500 bytes):
 $RESPONSE_BODY
 
 --- Service status ---
-$(systemctl is-active topgoldpicks.service mongod nginx 2>&1)
+$(systemctl is-active touchgoldpicks.service mongod nginx 2>&1)
 
---- Recent journal: topgoldpicks.service ---
-$(journalctl -u topgoldpicks.service --no-pager -n 20 --since '5 minutes ago' 2>/dev/null | tail -15)
+--- Recent journal: touchgoldpicks.service ---
+$(journalctl -u touchgoldpicks.service --no-pager -n 20 --since '5 minutes ago' 2>/dev/null | tail -15)
 
 --- Memory ---
 $(free -h)
@@ -63,7 +63,7 @@ Monitor will alert again on recovery."
 elif [ "$CURRENT" = "up" ] && [ "$PREV_STATE" = "down" ]; then
   DOWN_SINCE=$(cat "$SINCE_FILE" 2>/dev/null || echo "unknown")
   rm -f "$SINCE_FILE"
-  SUBJECT="[Top Gold Picks] Site RECOVERED"
+  SUBJECT="[Touch Gold Picks] Site RECOVERED"
   MSG="Health check now passing at $NOW
 
 URL: $URL
@@ -72,7 +72,7 @@ Response time: ${TIME}s
 Down since: $DOWN_SINCE
 
 --- Service status ---
-$(systemctl is-active topgoldpicks.service mongod nginx 2>&1)
+$(systemctl is-active touchgoldpicks.service mongod nginx 2>&1)
 
 --- Memory ---
 $(free -h)"

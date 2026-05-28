@@ -10,7 +10,7 @@ export async function connectDb() {
 
   client = new MongoClient(config.mongodbUri);
   await client.connect();
-  db = client.db('topgoldpicks');
+  db = client.db('touchgoldpicks');
 
   await db.collection('picks').createIndex(
     { sport_key: 1, date: -1 },

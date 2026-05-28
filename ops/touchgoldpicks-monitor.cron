@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Uptime monitor — checks /api/health every 5 minutes, emails on state change.
+# Install with: cp ops/touchgoldpicks-monitor.cron /etc/cron.d/touchgoldpicks-monitor
+*/5 * * * * root /opt/touchgoldpicks/scripts/monitor.sh >> /var/log/touchgoldpicks-monitor.log 2>&1

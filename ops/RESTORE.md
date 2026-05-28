@@ -1,6 +1,8 @@
 # Restore from backup
 
-Backups live at `/var/backups/mongodb/topgoldpicks-YYYYMMDDTHHMMSSZ.gz` on the production droplet.
+Backups live at `/var/backups/mongodb/touchgoldpicks-YYYYMMDDTHHMMSSZ.gz` on the production droplet.
+
+> **Note on legacy archives:** the project was renamed from `topgoldpicks` → `touchgoldpicks`. Backups dated before the rename use the old filename pattern `topgoldpicks-*.gz` and contain a database also named `topgoldpicks`. To restore from one of those, substitute `topgoldpicks` for `touchgoldpicks` in the archive path AND change `--nsFrom='touchgoldpicks.*'` to `--nsFrom='topgoldpicks.*'` below.
 
 ## List available backups
 
@@ -12,32 +14,32 @@ ls -lah /var/backups/mongodb/
 
 ```bash
 # Pick the archive you want
-ARCHIVE=/var/backups/mongodb/topgoldpicks-20260524T020000Z.gz
+ARCHIVE=/var/backups/mongodb/touchgoldpicks-20260524T020000Z.gz
 
 # Restore to a different db first (safe), then swap
 mongorestore \
   --host 127.0.0.1 --port 27017 \
   --gzip --archive="$ARCHIVE" \
-  --nsFrom='topgoldpicks.*' --nsTo='topgoldpicks_restored.*'
+  --nsFrom='touchgoldpicks.*' --nsTo='touchgoldpicks_restored.*'
 
 # Verify
-mongosh topgoldpicks_restored --eval 'db.picks.countDocuments({})'
+mongosh touchgoldpicks_restored --eval 'db.picks.countDocuments({})'
 
 # Atomically swap
 mongosh admin --eval '
-  db.adminCommand({renameCollection: "topgoldpicks.picks", to: "topgoldpicks_old.picks"});
-  db.adminCommand({renameCollection: "topgoldpicks_restored.picks", to: "topgoldpicks.picks"});
+  db.adminCommand({renameCollection: "touchgoldpicks.picks", to: "touchgoldpicks_old.picks"});
+  db.adminCommand({renameCollection: "touchgoldpicks_restored.picks", to: "touchgoldpicks.picks"});
 '
 ```
 
 ## Overwrite live database (destructive)
 
 ```bash
-ARCHIVE=/var/backups/mongodb/topgoldpicks-20260524T020000Z.gz
+ARCHIVE=/var/backups/mongodb/touchgoldpicks-20260524T020000Z.gz
 
-systemctl stop topgoldpicks.service        # avoid mid-restore writes
+systemctl stop touchgoldpicks.service        # avoid mid-restore writes
 mongorestore --host 127.0.0.1 --gzip --archive="$ARCHIVE" --drop
-systemctl start topgoldpicks.service
+systemctl start touchgoldpicks.service
 ```
 
 The `--drop` flag drops collections before restoring. Without it, `mongorestore` skips existing documents.
